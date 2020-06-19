@@ -13,8 +13,13 @@ A basic media downloading tool written in [Deno](https://deno.land). Pass in a U
 
 ### Example
 
-```ts
+```sh
 deno run --allow-net --allow-write --allow-read --unstable media_downloader.ts -t jpg -t png -u https://dribbble.com/shots
+```
+
+### Install
+```sh
+deno install --allow-net --allow-write --allow-read --unstable --name media-downloader src/main.ts
 ```
 
 ## Supported Sites

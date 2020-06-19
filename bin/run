@@ -1,3 +1,1 @@
-deno run --allow-net --allow-write --allow-read --unstable media_downloader.ts -t jpg -u https://dribbble.com/shots
-
-
+deno run --allow-net --allow-write --allow-read --unstable main.ts -u https://dribbble.com/shots
