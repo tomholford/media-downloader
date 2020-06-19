@@ -16,7 +16,6 @@ class UrlParser {
     await this.scrape();
 
     const linkRegex = new RegExp(UrlParser.LINK_REGEX_BASE.replace('TYPE', this.file_types.join('|')), 'g');
-    console.log(linkRegex);
     const matches = [...this.html.matchAll(linkRegex)];
     const urls = matches.map((match: RegExpMatchArray) => match[0]);
 
