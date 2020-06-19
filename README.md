@@ -8,8 +8,8 @@ A basic media downloading tool written in [Deno](https://deno.land). Pass in a U
 
 ## Usage
 
-- `-u` - the URL to scrape for media links
-- `-t` - the filetype(s) to download
+- `-u` - **(required)** the URL to scrape for media links
+- `-t` - *(optional)* the filetype(s) to download; defaults to several common image formats
 
 ### Example
 
@@ -17,9 +17,15 @@ A basic media downloading tool written in [Deno](https://deno.land). Pass in a U
 deno run --allow-net --allow-write --allow-read --unstable media_downloader.ts -t jpg -t png -u https://dribbble.com/shots
 ```
 
-### Install
+## Install
+1. Clone this repo
+1. Run this command
 ```sh
-deno install --allow-net --allow-write --allow-read --unstable --name media-downloader src/main.ts
+deno install --allow-net --allow-write --allow-read --unstable --name media-downloader main.ts
+```
+1. Then, use it like so:
+```sh
+media-downloader -u https://example.com
 ```
 
 ## Supported Sites
@@ -28,5 +34,6 @@ This tool has been confirmed to work with imageboards [e.g., [4chan](https://4ch
 
 ## Roadmap
 
+- `-p` flag for specifying custom output path
 - Support `<img>` tags
 - Multiple parallel requests
