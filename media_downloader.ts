@@ -39,7 +39,7 @@ class MediaDownloader {
       let url: string = match;
 
       // TODO: hack: improve regex to prevent urls like "/gif/"
-      if(url.length < 5) {
+      if(url.length < 7) {
         console.log(red(`Skipping ${ url } ...`))
         return;
       }

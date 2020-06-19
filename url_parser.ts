@@ -1,7 +1,7 @@
 import { bold, blue } from "https://deno.land/std/fmt/colors.ts";
 
 class UrlParser {
-  static readonly LINK_REGEX_BASE = '(?<=href=")([A-z0-9\:\/\.]*\.TYPE)';
+  static readonly LINK_REGEX_BASE = '((?<=src=")|(?<=href="))([\\/.:-\\d\\w]+\\.(TYPE))';
 
   url: string;
   file_types: Array<string>;
@@ -14,17 +14,14 @@ class UrlParser {
 
   async links(): Promise<Array<string>> {
     await this.scrape();
-    let output: Array<string> = [];
 
-    this.file_types.forEach((fileType: string) => {
-      const linkRegex = new RegExp(UrlParser.LINK_REGEX_BASE.replace('TYPE', fileType), 'g');
-      const matches = [...this.html.matchAll(linkRegex)];
-      const urls = matches.map((match: RegExpMatchArray) => match[0]);
+    const linkRegex = new RegExp(UrlParser.LINK_REGEX_BASE.replace('TYPE', this.file_types.join('|')), 'g');
+    console.log(linkRegex);
+    const matches = [...this.html.matchAll(linkRegex)];
+    const urls = matches.map((match: RegExpMatchArray) => match[0]);
 
-      output = [...output, ...urls];
-    });
 
-    let unique = [...new Set(output)]; 
+    let unique = [...new Set(urls)]; 
 
     return unique;
   }
