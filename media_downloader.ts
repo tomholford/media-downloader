@@ -33,13 +33,15 @@ class MediaDownloader {
     const up = new UrlParser(this.url, this.file_types);
     const matches = await up.links();
 
+    // matches.forEach((m: string) => console.log(m));
+
     console.log(bold(blue(`Querying ${ matches.length } files ...`)));
 
     asyncForEach(matches, async (match: string) => {
       let url: string = match;
 
       // TODO: hack: improve regex to prevent urls like "/gif/"
-      if(url.length < 7) {
+      if(url.length < 10) {
         console.log(red(`Skipping ${ url } ...`))
         return;
       }
