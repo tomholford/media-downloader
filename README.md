@@ -1,6 +1,6 @@
 # media-downloader
 
-![image](https://user-images.githubusercontent.com/16504501/85108368-937d2e00-b24a-11ea-8fe7-b91245ba0539.png)
+![image](https://user-images.githubusercontent.com/16504501/85109233-f58a6300-b24b-11ea-9408-781501f81946.png)
 
 A basic media downloading tool written in [Deno](https://deno.land). Pass in a URL, select which filetypes you're interested in, and it will scrape the HTML and download all the linked files that match the filter.
 
