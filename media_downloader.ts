@@ -1,5 +1,6 @@
 import { parse } from "https://deno.land/std/flags/mod.ts";
 import { blue, bold, red } from "https://deno.land/std/fmt/colors.ts";
+import { join } from "https://deno.land/std/path/mod.ts";
 
 import UrlDownloader from './url_downloader.ts';
 import UrlParser from './url_parser.ts';
@@ -7,10 +8,12 @@ import asyncForEach from './async_for_each.ts';
 
 class MediaDownloader {
   static readonly DEFUALT_FILETYPES = ['jpg', 'jpeg', 'png', 'gif'];
+  static readonly DEFAULT_PATH = './output/';
   static readonly FILE_NAME_REGEX = /\/([A-z0-9\.]+)(?=[^\/]*$)/;
 
   url: string;
   file_types: Array<string> = MediaDownloader.DEFUALT_FILETYPES;
+  path: string;
 
   constructor() { 
     const parsedArgs = parse(Deno.args);
@@ -18,6 +21,8 @@ class MediaDownloader {
       throw '-u (url) argument required';
     }
     this.url = parsedArgs['u'];
+
+    this.path = parsedArgs['p'] || join(Deno.cwd(), MediaDownloader.DEFAULT_PATH);
 
     const file_types: string | Array<string> | undefined = parsedArgs['t'];
     if(file_types) {
@@ -33,9 +38,8 @@ class MediaDownloader {
     const up = new UrlParser(this.url, this.file_types);
     const matches = await up.links();
 
-    // matches.forEach((m: string) => console.log(m));
-
     console.log(bold(blue(`Querying ${ matches.length } files ...`)));
+    console.log(bold(blue(`Writing to ${ this.path } ...`)));
 
     asyncForEach(matches, async (match: string) => {
       let url: string = match;
@@ -59,7 +63,7 @@ class MediaDownloader {
         throw 'should not get here';
       }
     
-      const d = new UrlDownloader(url, name);
+      const d = new UrlDownloader(url, name, this.path);
       await d.download();
     })
   }

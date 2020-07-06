@@ -11,6 +11,7 @@ A basic media downloading tool written in [Deno](https://deno.land). Pass in a U
 ## Usage
 
 - `-u` - **(required)** the URL to scrape for media links
+- `-p` - *(optional)* the output path for writing files; defaults to `./output/`
 - `-t` - *(optional)* the filetype(s) to download; defaults to several common image formats
 
 ### Example
@@ -36,6 +37,5 @@ This tool has been confirmed to work with imageboards [e.g., [4chan](https://4ch
 
 ## Roadmap
 
-- `-p` flag for specifying custom output path
 - Support `<img>` tags
 - Multiple parallel requests

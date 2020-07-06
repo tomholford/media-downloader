@@ -1,18 +1,17 @@
 import { exists, ensureDir } from "https://deno.land/std/fs/mod.ts";
 import { fromStreamReader } from "https://deno.land/std/io/mod.ts";
-
+import { join } from "https://deno.land/std/path/mod.ts";
 import { bold, green } from "https://deno.land/std/fmt/colors.ts";
 
 class UrlDownloader {
-  static readonly DEFAULT_PATH = './output/';
   url: string;
   name: string;
   path: string;
 
-  constructor(url: string, name: string, path?: string) {
+  constructor(url: string, name: string, path: string) {
     this.url = url;
     this.name = name;
-    this.path = path || UrlDownloader.DEFAULT_PATH;
+    this.path = path;
   }
 
   async download() {
@@ -34,7 +33,7 @@ class UrlDownloader {
   }
 
   get filepath(): string {
-    return this.path + this.name;
+    return join(this.path, this.name);
   }
 }
 
