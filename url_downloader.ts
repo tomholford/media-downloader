@@ -1,4 +1,5 @@
 import { exists, ensureDir } from "https://deno.land/std/fs/mod.ts";
+import { fromStreamReader } from "https://deno.land/std/io/mod.ts";
 
 import { bold, green } from "https://deno.land/std/fmt/colors.ts";
 
@@ -15,28 +16,25 @@ class UrlDownloader {
   }
 
   async download() {
-    const fileExists = await exists(this.path + this.name);
+    const fileExists = await exists(this.filepath);
     if(fileExists) {
       console.log(this.name + ' already exists, skipping...');
       return;
     }
-  
+
     console.log(bold(green('Downloading ' + this.name + ' (' + this.url + ') ...')));
     const response = await fetch(this.url);
-  
-    console.log('Processing response ...');
-    const blob = await response.blob();
-    const buffer = await blob.arrayBuffer();
-    const data = new Deno.Buffer(buffer).bytes();
-  
-    console.log('Writing file ...');
 
+    console.log('Writing file ...');
     await ensureDir(this.path);
-    await Deno.writeFile(this.path + this.name, data);
-  
-    // TODO: https://github.com/denoland/deno/pull/5789
-    // const newFile = await Deno.open(this.path, { create: true, write: true });
-    // await Deno.copy(response.body.getReader(), newFile);
+    const newFile = await Deno.open(this.filepath, { create: true, write: true });
+    const reader = fromStreamReader(response.body!.getReader());
+    await Deno.copy(reader, newFile);
+    newFile.close();
+  }
+
+  get filepath(): string {
+    return this.path + this.name;
   }
 }
 
