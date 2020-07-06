@@ -1,7 +1,9 @@
 import { exists, ensureDir } from "https://deno.land/std/fs/mod.ts";
 import { fromStreamReader } from "https://deno.land/std/io/mod.ts";
 import { join } from "https://deno.land/std/path/mod.ts";
-import { bold, green } from "https://deno.land/std/fmt/colors.ts";
+import { bold, blue, green } from "https://deno.land/std/fmt/colors.ts";
+import { filesize } from "https://deno.land/x/filesize/mod.ts";
+
 
 class UrlDownloader {
   url: string;
@@ -29,7 +31,9 @@ class UrlDownloader {
     const newFile = await Deno.open(this.filepath, { create: true, write: true });
     const reader = fromStreamReader(response.body!.getReader());
     await Deno.copy(reader, newFile);
+    const stats = await Deno.fstat(newFile.rid);
     newFile.close();
+    console.log(blue(`Wrote ${ filesize(stats.size) } to ${ this.filepath }`))
   }
 
   get filepath(): string {
