@@ -9,7 +9,7 @@ import asyncForEach from './async_for_each.ts';
 class MediaDownloader {
   static readonly DEFUALT_FILETYPES = ['jpg', 'jpeg', 'png', 'gif'];
   static readonly DEFAULT_PATH = './output/';
-  static readonly FILE_NAME_REGEX = /\/([A-z0-9\.]+)(?=[^\/]*$)/;
+  static readonly FILE_NAME_REGEX = /\/([A-z0-9\.\-]+)(?=[^\/]*$)/;
 
   url: string;
   file_types: Array<string> = MediaDownloader.DEFUALT_FILETYPES;
