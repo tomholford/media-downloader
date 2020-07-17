@@ -13,6 +13,7 @@ A basic media downloading tool written in [Deno](https://deno.land). Pass in a U
 - `-u` - **(required)** the URL to scrape for media links
 - `-p` - *(optional)* the output path for writing files; defaults to `./output/`
 - `-t` - *(optional)* the filetype(s) to download; defaults to several common image formats
+- `-R` - *(optional)* after finishing downloading, scan the output directory and remove duplicates
 
 ### Example
 

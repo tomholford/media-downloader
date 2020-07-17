@@ -2,6 +2,7 @@ import { parse } from "https://deno.land/std/flags/mod.ts";
 import { blue, bold, red } from "https://deno.land/std/fmt/colors.ts";
 import { join } from "https://deno.land/std/path/mod.ts";
 
+import DuplicateRemover from './duplicate_remover.ts'
 import UrlDownloader from './url_downloader.ts';
 import UrlParser from './url_parser.ts';
 import asyncForEach from './async_for_each.ts';
@@ -14,6 +15,7 @@ class MediaDownloader {
   url: string;
   file_types: Array<string> = MediaDownloader.DEFUALT_FILETYPES;
   path: string;
+  removeDuplicates: boolean = false;
 
   constructor() { 
     const parsedArgs = parse(Deno.args);
@@ -23,6 +25,8 @@ class MediaDownloader {
     this.url = parsedArgs['u'];
 
     this.path = parsedArgs['p'] || join(Deno.cwd(), MediaDownloader.DEFAULT_PATH);
+
+    this.removeDuplicates = parsedArgs['R'] ? true : false;
 
     const file_types: string | Array<string> | undefined = parsedArgs['t'];
     if(file_types) {
@@ -41,7 +45,7 @@ class MediaDownloader {
     console.log(bold(blue(`Querying ${ matches.length } files ...`)));
     console.log(bold(blue(`Writing to ${ this.path } ...`)));
 
-    asyncForEach(matches, async (match: string) => {
+    await asyncForEach(matches, async (match: string) => {
       let url: string = match;
 
       // TODO: hack: improve regex to prevent urls like "/gif/"
@@ -65,7 +69,14 @@ class MediaDownloader {
     
       const d = new UrlDownloader(url, name, this.path);
       await d.download();
-    })
+    });
+
+    if(this.removeDuplicates) {
+      const dr = new DuplicateRemover(this.path);
+      await dr.removeDuplicates();
+    }
+
+    console.log('Done :)')
   }
 }
 
