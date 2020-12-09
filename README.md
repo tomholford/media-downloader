@@ -6,7 +6,7 @@ A basic media downloading tool written in [Deno](https://deno.land). Pass in a U
 
 ## Preqequisites
 
-* [Deno](https://deno.land) 1.1.0+
+* [Deno](https://deno.land) 1.6.0+
 
 ## Usage
 
@@ -30,6 +30,13 @@ deno install --allow-net --allow-write --allow-read --unstable --name media-down
 1. Then, use it like so:
 ```sh
 media-downloader -u https://example.com
+```
+
+### macOS
+
+You will also need to add the `deno` executables path to your `bash_profile`:
+```sh
+export PATH="/Users/[your username]/.deno/bin:$PATH"
 ```
 
 ## Supported Sites
