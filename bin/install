@@ -1,1 +1,3 @@
+#!/bin/bash
+
 deno install -f --allow-net --allow-write --allow-read --unstable --name media-downloader main.ts
