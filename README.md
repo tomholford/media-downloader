@@ -2,9 +2,9 @@
 
 ![image](https://user-images.githubusercontent.com/16504501/85109233-f58a6300-b24b-11ea-9408-781501f81946.png)
 
-A basic media downloading tool written in [Deno](https://deno.land). Pass in a URL, select which filetypes you're interested in, and it will scrape the HTML and download all the linked files that match the filter.
+A basic media downloading tool written in Typescript for [Deno](https://deno.land). Pass in a URL, select which filetypes you're interested in, and it will scrape the HTML and download all the linked files that match the filter.
 
-## Preqequisites
+## Prerequisites
 
 * [Deno](https://deno.land) 1.6.0+
 
