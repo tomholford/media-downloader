@@ -1,4 +1,4 @@
-import { createHash, Hasher } from 'https://deno.land/std/hash/mod.ts';
+import { crypto, DigestAlgorithm } from "https://deno.land/std/crypto/mod.ts";
 
 /**
  * Hashes a file at a path
@@ -10,21 +10,24 @@ class FileHasher {
     this.filepath = filepath;
   }
 
-  static md5(filepath: string): string {
+  static async md5(filepath: string) {
     const h = new FileHasher(filepath);
-    return h.hash();
+    return h.digestMessage();
   }
 
-  hash(): string {
-    return this.hasher.update(this.data).toString();
+  async digestMessage(algorithm: DigestAlgorithm = 'MD5') {
+    const hash = await crypto.subtle.digest(algorithm, this.data);
+    return this.hex(hash);
   }
 
   private get data(): Uint8Array {
     return Deno.readFileSync(this.filepath);
   }
 
-  private get hasher(): Hasher {
-    return createHash('md5');
+  private hex(buffer: ArrayBuffer): string {
+    const hashArray = Array.from(new Uint8Array(buffer));
+    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
   }
 }
 

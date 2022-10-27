@@ -1,9 +1,8 @@
 // import {  } from 'https://deno.land/std/hash/mod.ts';
 
 import { exists, walkSync, WalkEntry } from "https://deno.land/std/fs/mod.ts";
-import { join } from "https://deno.land/std/path/mod.ts";
 import FileHasher from './file_hasher.ts';
-import asyncForEach from './async_for_each.ts';
+import { asyncForEach } from './async_for_each.ts';
 
 /**
  * Removes duplicate files within a directory 
@@ -20,12 +19,12 @@ class DuplicateRemover {
     let duplicateSet: Set<string> = new Set();
     const paths = await this.paths();
 
-    paths.forEach((path: string, _i, _a) => {
-      const hash = FileHasher.md5(path);
+    await asyncForEach(paths, async (path: string) => {
+      const hash = await FileHasher.md5(path);
       if(duplicateSet.has(hash)) {
         console.log(`Found duplicate at ${path}, removing ...`);
-        if(exists(path)) {
-          Deno.removeSync(path)
+        if(await exists(path)) {
+          await Deno.remove(path)
         } else {
           console.log(`Unable to remove ${path}`)
         }

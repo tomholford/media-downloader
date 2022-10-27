@@ -5,7 +5,7 @@ import { join } from "https://deno.land/std/path/mod.ts";
 import DuplicateRemover from './duplicate_remover.ts'
 import UrlDownloader from './url_downloader.ts';
 import UrlParser from './url_parser.ts';
-import asyncForEach from './async_for_each.ts';
+import { asyncForEach } from './async_for_each.ts';
 
 class MediaDownloader {
   static readonly DEFUALT_FILETYPES = ['jpg', 'jpeg', 'png', 'gif'];
