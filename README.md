@@ -6,7 +6,7 @@ A basic media downloading tool written in Typescript for [Deno](https://deno.lan
 
 ## Prerequisites
 
-* [Deno](https://deno.land) 1.6.0+
+* [Deno](https://deno.land) 1.27.0+
 
 ## Usage
 
