@@ -25,6 +25,11 @@ class UrlDownloader {
     console.log(bold(green('Downloading ' + this.name + ' (' + this.url + ') ...')));
     const response = await fetch(this.url);
 
+    if(!response.ok) {
+      console.log(`Skipping ${this.name} (${response.status} ${response.statusText}: ${this.url})`);
+      return;
+    }
+
     console.log('Writing file ...');
     await ensureDir(this.path);
     const newFile = await Deno.open(this.filepath, { create: true, write: true });
