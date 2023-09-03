@@ -16,7 +16,7 @@ class DuplicateRemover {
 
   async removeDuplicates() {
     console.log(`removing duplicates from ${this.directory} ...`)
-    let duplicateSet: Set<string> = new Set();
+    const duplicateSet: Set<string> = new Set();
     const paths = await this.paths();
 
     await asyncForEach(paths, async (path: string) => {
@@ -35,7 +35,7 @@ class DuplicateRemover {
   }
 
   private async paths(): Promise<string[]> {
-    let output: string[] = [];
+    const output: string[] = [];
 
     const entries = Array.from(walkSync(this.directory));
 

@@ -10,7 +10,7 @@ class FileHasher {
     this.filepath = filepath;
   }
 
-  static async md5(filepath: string) {
+  static md5(filepath: string) {
     const h = new FileHasher(filepath);
     return h.digestMessage();
   }

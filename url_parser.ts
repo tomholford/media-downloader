@@ -5,7 +5,7 @@ class UrlParser {
 
   url: string;
   file_types: Array<string>;
-  html: string = '';
+  html = '';
 
   constructor(url: string, file_types: Array<string>) {
     this.url = url;
@@ -20,7 +20,7 @@ class UrlParser {
     const urls = matches.map((match: RegExpMatchArray) => match[0]);
 
 
-    let unique = [...new Set(urls)]; 
+    const unique = [...new Set(urls)]; 
 
     return unique;
   }
