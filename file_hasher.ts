@@ -15,7 +15,7 @@ class FileHasher {
     return h.digestMessage();
   }
 
-  async digestMessage(algorithm: DigestAlgorithm = 'MD5') {
+  async digestMessage(algorithm: DigestAlgorithm = "MD5") {
     const hash = await crypto.subtle.digest(algorithm, this.data);
     return this.hex(hash);
   }
@@ -26,7 +26,9 @@ class FileHasher {
 
   private hex(buffer: ArrayBuffer): string {
     const hashArray = Array.from(new Uint8Array(buffer));
-    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join(
+      "",
+    );
     return hashHex;
   }
 }
