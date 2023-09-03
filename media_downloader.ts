@@ -59,7 +59,7 @@ class MediaDownloader {
         url = `https:${url}`;
       }
 
-      if (!url.startsWith("/")) {
+      if (!url.startsWith("/") && !url.startsWith("http")) {
         url = `${this.url}/${url}`;
       }
 
