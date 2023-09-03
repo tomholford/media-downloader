@@ -15,7 +15,7 @@ class MediaDownloader {
   url: string;
   file_types: Array<string> = MediaDownloader.DEFUALT_FILETYPES;
   path: string;
-  removeDuplicates: boolean = false;
+  removeDuplicates = false;
 
   constructor() { 
     const parsedArgs = parse(Deno.args);
@@ -57,9 +57,12 @@ class MediaDownloader {
       if(url.startsWith('//')) {
         url = `https:${url}`;
       }
-    
+
+      if(!url.startsWith('/')) {
+        url = `${this.url}/${url}`;
+      }
+
       const nameMatch: RegExpMatchArray | null = url.match(MediaDownloader.FILE_NAME_REGEX)
-    
       let name = '';
       if(nameMatch) {
         name = nameMatch[1];
