@@ -1,9 +1,7 @@
 import { ensureDir, exists } from "https://deno.land/std/fs/mod.ts";
-import { readerFromStreamReader } from "https://deno.land/std@0.80.0/io/mod.ts";
 import { join } from "https://deno.land/std/path/mod.ts";
 import { blue, bold, green } from "https://deno.land/std/fmt/colors.ts";
 import { fmtFileSize } from "https://deno.land/x/getfiles/mod.ts";
-import { copy } from "https://deno.land/std@0.201.0/streams/mod.ts";
 
 class UrlDownloader {
   url: string;
@@ -41,9 +39,19 @@ class UrlDownloader {
       create: true,
       write: true,
     });
-    const reader = readerFromStreamReader(response.body!.getReader());
-    await copy(reader, newFile);
-    const stats = await Deno.fstat(newFile.rid);
+
+    const reader = response.body?.getReader();
+    if (reader) {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (value) {
+          await newFile.write(value);
+        }
+      }
+    }
+
+    const stats = await newFile.stat();
     newFile.close();
     console.log(blue(`Wrote ${fmtFileSize(stats.size)} to ${this.filepath}`));
   }

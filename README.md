@@ -9,7 +9,7 @@ that match the filter.
 
 ## Prerequisites
 
-- [Deno](https://deno.land) 1.27.0+
+- [Deno](https://deno.land) 2.0+
 
 ## Usage
 
